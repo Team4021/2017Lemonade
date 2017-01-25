@@ -1,4 +1,4 @@
-//2017 Lemonade GitHub
+//2017 Lemonade
 package org.usfirst.frc.team4021.robot;
 
 
