@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Timer;
 import com.ctre.CANTalon;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.VictorSP;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
