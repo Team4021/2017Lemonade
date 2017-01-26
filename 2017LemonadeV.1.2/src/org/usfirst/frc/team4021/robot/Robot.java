@@ -27,7 +27,9 @@ public class Robot extends IterativeRobot {
 	final String Bekahsauto = "Bekah's Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
+	
 	RobotDrive Tankdrive;
+	VictorSP frontLeft, frontRight, rearLeft, rearRight;
 	Joystick leftstick, rightstick;
 	double TankDashLeft;
 	double TankDashRight;
@@ -46,12 +48,19 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		chooser.addObject("Bekah's Auto", Bekahsauto);
 		SmartDashboard.putData("Auto choices", chooser);
-		Tankdrive = new RobotDrive(0,1,2,3);
+		
+    	frontLeft = new VictorSP(0);
+    	frontRight = new VictorSP(1);
+    	rearLeft = new VictorSP(2);
+    	rearRight = new VictorSP(3);
+		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
+		
 		SRX = rightstick.getX();
+		
 		CameraServer.getInstance().startAutomaticCapture();
 		CameraServer.getInstance().getVideo();
 		CameraServer.getInstance().putVideo("Cam", 640, 480); 
