@@ -55,6 +55,7 @@ public class Robot extends IterativeRobot {
 		CameraServer.getInstance().startAutomaticCapture();
 		CameraServer.getInstance().getVideo();
 		CameraServer.getInstance().putVideo("Cam", 640, 480); 
+		//New camera?
 	}
 
 	/**
