@@ -56,8 +56,6 @@ public class Robot extends IterativeRobot {
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
-		TankDashLeft = leftstick.getY();
-		TankDashRight = rightstick.getY();
 		
 		SRX = rightstick.getX();
 		
@@ -119,6 +117,8 @@ public class Robot extends IterativeRobot {
 		TankDrive();
 		UpdateDash();
 		TalonSRX();
+		TankDashLeft = leftstick.getY();
+		TankDashRight = rightstick.getY();
 	
 	}
 	
