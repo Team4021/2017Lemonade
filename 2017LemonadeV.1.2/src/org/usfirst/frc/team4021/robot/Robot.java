@@ -1,4 +1,8 @@
+<<<<<<< Upstream, based on origin/master
 //2017 Lemonade  ok
+=======
+//2017 Lemonade Master Version wow
+>>>>>>> 90c517c wow
 package org.usfirst.frc.team4021.robot;
 
 
