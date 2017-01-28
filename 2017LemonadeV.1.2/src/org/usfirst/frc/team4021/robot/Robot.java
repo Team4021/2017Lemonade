@@ -14,6 +14,7 @@ import com.ctre.CANTalon;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.cscore.UsbCamera;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -37,6 +38,8 @@ public class Robot extends IterativeRobot {
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	CANTalon TalonSRX = new CANTalon (0);
+	UsbCamera Cam0;
+	UsbCamera Cam1;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -59,9 +62,8 @@ public class Robot extends IterativeRobot {
 		
 		SRX = rightstick.getX();
 		
-		CameraServer.getInstance().startAutomaticCapture();
-		CameraServer.getInstance().getVideo();
-		CameraServer.getInstance().putVideo("Cam", 640, 480); 
+		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);
 	}
 
 	/**
