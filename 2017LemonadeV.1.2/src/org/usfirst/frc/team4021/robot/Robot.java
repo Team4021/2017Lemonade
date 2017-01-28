@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 //2017 Lemonade Test
+=======
+//2017 Lemonade
+
+>>>>>>> refs/heads/master
 package org.usfirst.frc.team4021.robot;
 
 
