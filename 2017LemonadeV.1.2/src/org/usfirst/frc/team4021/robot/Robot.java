@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
-	CANTalon TalonSRX = new CANTalon (0);
+	CANTalon RopeClimber = new CANTalon (0);
 	UsbCamera Cam0;
 	UsbCamera Cam1;
 
@@ -59,8 +59,6 @@ public class Robot extends IterativeRobot {
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
-		
-		SRX = rightstick.getX();
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);
@@ -118,7 +116,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		TankDrive();
 		UpdateDash();
-		TalonSRX();
+		RopeClimb();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
 	
@@ -139,9 +137,11 @@ public class Robot extends IterativeRobot {
 	
 	}
 	
-	public void TalonSRX() {
-		TalonSRX.set(SRX);
-		
+	public void RopeClimb() {
+	  while(leftstick.getRawButton(1)){
+			RopeClimber.set(.5);
+	  }
+	  RopeClimber.set(0);
 	}
 	/**
 	 * This function is called periodically during test mode
