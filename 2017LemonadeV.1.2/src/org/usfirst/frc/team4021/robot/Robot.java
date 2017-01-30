@@ -1,4 +1,4 @@
-//2017 Lemonade test
+//2017 Lemonade Test
 package org.usfirst.frc.team4021.robot;
 
 
@@ -12,9 +12,9 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import com.ctre.CANTalon;
 import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.cscore.UsbCamera;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -52,7 +52,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Bekah's Auto", Bekahsauto);
 		SmartDashboard.putData("Auto choices", chooser);
 		
-    	frontLeft = new VictorSP(0);
+    	frontLeft = new VictorSP(9);
     	frontRight = new VictorSP(1);
     	rearLeft = new VictorSP(2);
     	rearRight = new VictorSP(3);
@@ -63,8 +63,7 @@ public class Robot extends IterativeRobot {
 		SRX = rightstick.getX();
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);
-	}
+		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
