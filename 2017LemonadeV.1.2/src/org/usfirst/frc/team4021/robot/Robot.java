@@ -23,9 +23,9 @@ import edu.wpi.cscore.UsbCamera;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	final String Bekahsauto = "Bekah's Auto";
+	final String leftAuto = "Left Side";
+	final String middleAuto = "Middle Side";
+	final String rightAuto = "Right Side";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	
@@ -47,9 +47,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		chooser.addObject("Bekah's Auto", Bekahsauto);
+		chooser.addDefault("Left Side", leftAuto);
+		chooser.addObject("Middle Side", middleAuto);
+		chooser.addObject("Right Side", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		
     	frontLeft = new VictorSP(0);
@@ -89,10 +89,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
-			break;
-		case defaultAuto:
+		case leftAuto: 
+				Tankdrive.tankDrive(.5, .5);
+				Timer.delay(6);
+				Tankdrive.tankDrive(1, 1);
+				Timer.delay(8);
+				Tankdrive.tankDrive(1.2, 1.2);
+				Timer.delay(2);
+			break;		
+			
+		case middleAuto:
 		default:
 			Tankdrive.tankDrive(.3, .3);
 			Timer.delay(5);
@@ -106,9 +112,18 @@ public class Robot extends IterativeRobot {
 			Timer.delay(5);
 			Tankdrive.tankDrive(0, 0);			
 			break;
+			
+		case rightAuto:
+			Tankdrive.tankDrive(.4, .4);
+			Timer.delay(1);
+			Tankdrive.tankDrive(-1, -1);
+			Timer.delay(4);
+			Tankdrive.tankDrive(-.5, -.5);
+			Timer.delay(3);
+			break;
 			}
 		}
-
+	
 	/**
 	 * This function is called periodically during operator control
 	 */
