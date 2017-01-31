@@ -34,12 +34,15 @@ public class Robot extends IterativeRobot {
 	Joystick leftstick, rightstick;
 	double TankDashLeft;
 	double TankDashRight;
+	double PrecisionLeft;
+	double PrecisionRight;
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	CANTalon RopeClimber = new CANTalon (0);
-	UsbCamera Cam0;
-	UsbCamera Cam1;
+	//UsbCamera Cam0;
+	//UsbCamera Cam1;
+	boolean PrecisionDriving;
 	
 
 	/**
@@ -60,10 +63,13 @@ public class Robot extends IterativeRobot {
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
+		PrecisionLeft = leftstick.getY() * 0.5;
+		PrecisionRight = rightstick.getY() * 0.5;
 		
 		
-		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	}
+		//Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		//Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
+		}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -110,12 +116,15 @@ public class Robot extends IterativeRobot {
 		RopeClimb();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
+		System.out.println(leftstick.getRawButton(1));
 	
 	}
 	
 	public void TankDrive() {
+		while (leftstick.getRawButton(1)) {
+			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
+		}
 		Tankdrive.tankDrive(leftstick, rightstick);
-		
 	}
 	
 	public void UpdateDash() {
@@ -124,6 +133,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
+		SmartDashboard.putBoolean("Precison Driving", leftstick.getRawButton(1));
 	
 	}
 	
