@@ -23,12 +23,11 @@ import edu.wpi.first.wpilibj.VictorSP;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	final String Bekahsauto = "Bekah's Auto";
+	final String leftAuto = "Left Side";
+	final String middleAuto = "Middle";
+	final String rightAuto = "Right Side";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	
 	RobotDrive Tankdrive;
 	VictorSP frontLeft, frontRight, rearLeft, rearRight;
 	Joystick leftstick, rightstick;
@@ -47,9 +46,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		chooser.addObject("Bekah's Auto", Bekahsauto);
+		chooser.addDefault("Left Side", leftAuto);
+		chooser.addObject("Middle", middleAuto);
+		chooser.addObject("Right Side", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		
     	frontLeft = new VictorSP(9);
@@ -88,22 +87,15 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
+		case leftAuto:
+			// Put auto code here
 			break;
-		case defaultAuto:
+		case middleAuto:
 		default:
-			Tankdrive.tankDrive(.3, .3);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);
-			Timer.delay(3);
-			Tankdrive.tankDrive(-.3, -.3);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);
-			Timer.delay(3);
-			Tankdrive.tankDrive(.7, -.2);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);			
+			// Put auto code here		
+			break;
+		case rightAuto:
+			// Put auto code here		
 			break;
 			}
 		}
