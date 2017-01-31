@@ -40,6 +40,7 @@ public class Robot extends IterativeRobot {
 	CANTalon RopeClimber = new CANTalon (0);
 	UsbCamera Cam0;
 	UsbCamera Cam1;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -52,13 +53,14 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Bekah's Auto", Bekahsauto);
 		SmartDashboard.putData("Auto choices", chooser);
 		
-    	frontLeft = new VictorSP(9);
+    	frontLeft = new VictorSP(0);
     	frontRight = new VictorSP(1);
     	rearLeft = new VictorSP(2);
     	rearRight = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
+		
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	}
@@ -89,21 +91,11 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
 		case customAuto:
-			// Put custom auto code here
+			// Put auto code here
 			break;
 		case defaultAuto:
 		default:
-			Tankdrive.tankDrive(.3, .3);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);
-			Timer.delay(3);
-			Tankdrive.tankDrive(-.3, -.3);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);
-			Timer.delay(3);
-			Tankdrive.tankDrive(.7, -.2);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);			
+			// Put auto code here
 			break;
 			}
 		}
@@ -120,7 +112,6 @@ public class Robot extends IterativeRobot {
 		TankDashRight = rightstick.getY();
 	
 	}
-	
 	
 	public void TankDrive() {
 		Tankdrive.tankDrive(leftstick, rightstick);
