@@ -28,7 +28,6 @@ public class Robot extends IterativeRobot {
 	final String Bekahsauto = "Bekah's Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	
 	RobotDrive Tankdrive;
 	VictorSP frontLeft, frontRight, rearLeft, rearRight;
 	Joystick leftstick, rightstick;
@@ -89,21 +88,11 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
 		case customAuto:
-			// Put custom auto code here
+			// Put auto code here
 			break;
 		case defaultAuto:
 		default:
-			Tankdrive.tankDrive(.3, .3);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);
-			Timer.delay(3);
-			Tankdrive.tankDrive(-.3, -.3);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);
-			Timer.delay(3);
-			Tankdrive.tankDrive(.7, -.2);
-			Timer.delay(5);
-			Tankdrive.tankDrive(0, 0);			
+			// Put auto code here
 			break;
 			}
 		}
