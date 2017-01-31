@@ -40,8 +40,8 @@ public class Robot extends IterativeRobot {
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	CANTalon RopeClimber = new CANTalon (0);
-	//UsbCamera Cam0;
-	//UsbCamera Cam1;
+	UsbCamera Cam0;
+	UsbCamera Cam1;
 	boolean PrecisionDriving;
 	
 
@@ -67,8 +67,8 @@ public class Robot extends IterativeRobot {
 		PrecisionRight = rightstick.getY() * 0.5;
 		
 		
-		//Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		//Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
+		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		}
 
 	/**
@@ -85,8 +85,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autoSelected = chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
+		 autoSelected = SmartDashboard.getString("Auto Selector",defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
 	}
 
