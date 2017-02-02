@@ -15,6 +15,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Encoder;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -39,6 +40,14 @@ public class Robot extends IterativeRobot {
 	CANTalon RopeClimber = new CANTalon (0);
 	UsbCamera Cam0;
 	UsbCamera Cam1;
+	Encoder encoder;
+	Talon encoderMotor;
+	int count;
+	double distance;
+	double rate;
+	boolean direction;
+	boolean stopped;
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -50,17 +59,36 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		chooser.addObject("Bekah's Auto", Bekahsauto);
 		SmartDashboard.putData("Auto choices", chooser);
-		
-    	frontLeft = new VictorSP(9);
+		/*
+    	frontLeft = new VictorSP(0);
     	frontRight = new VictorSP(1);
     	rearLeft = new VictorSP(2);
     	rearRight = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
+		*/
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	}
+		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
+		encoderMotor = new Talon(2);
+		encoder = new Encoder(0,1, false, Encoder.EncodingType.k4X);
+		encoder.setMaxPeriod(.1);
+		encoder.setMinRate(10);
+		encoder.setDistancePerPulse(5);
+		encoder.setReverseDirection(true);
+		encoder.setSamplesToAverage(7);
+		int count = encoder.get();
+		double distance = encoder.getRaw();
+		double rate = encoder.getRate();
+		boolean direction = encoder.getDirection();
+		boolean stopped = encoder.getStopped();
+		System.out.println(count);
+		System.out.println(distance);
+		System.out.println(direction);
+		System.out.println(stopped);
+		System.out.println(rate);
+	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -102,14 +130,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		TankDrive();
+		//TankDrive();
 		UpdateDash();
-		RopeClimb();
+		//RopeClimb();
+		EncoderTest();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
+		
 	
 	}
-	
 	
 	public void TankDrive() {
 		Tankdrive.tankDrive(leftstick, rightstick);
@@ -122,6 +151,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
+		SmartDashboard.putNumber("Count", count);
+		SmartDashboard.putNumber("Distance", distance);
+		SmartDashboard.putNumber("Rate", rate);
+		SmartDashboard.putBoolean("Direction", direction);
+		SmartDashboard.putBoolean("Stopped", stopped);
 	
 	}
 	
@@ -131,6 +165,11 @@ public class Robot extends IterativeRobot {
 	  }
 	  RopeClimber.set(0);
 	}
+	
+	public void EncoderTest() {
+		encoderMotor.set(leftstick.getX());
+	}
+	
 	/**
 	 * This function is called periodically during test mode
 	 */
