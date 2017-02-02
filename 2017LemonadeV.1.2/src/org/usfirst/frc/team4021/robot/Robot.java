@@ -115,15 +115,18 @@ public class Robot extends IterativeRobot {
 		RopeClimb();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
-		System.out.println(leftstick.getRawButton(1));
 	
 	}
 	
 	public void TankDrive() {
-		while (leftstick.getRawButton(1)) {
+		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
 			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
+			PrecisionDriving = !PrecisionDriving;
 		}
 		Tankdrive.tankDrive(leftstick, rightstick);
+		PrecisionDriving = !PrecisionDriving;
+
+
 	}
 	
 	public void UpdateDash() {
@@ -132,7 +135,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
-		SmartDashboard.putBoolean("Precison Driving", leftstick.getRawButton(1));
+		SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);
 	
 	}
 	
