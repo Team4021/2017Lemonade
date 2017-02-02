@@ -78,12 +78,12 @@ public class Robot extends IterativeRobot {
 		encoder.setDistancePerPulse(5);
 		encoder.setReverseDirection(true);
 		encoder.setSamplesToAverage(7);
-		int count = encoder.get();
+		int count1 = encoder.get();
 		double distance = encoder.getRaw();
 		double rate = encoder.getRate();
 		boolean direction = encoder.getDirection();
 		boolean stopped = encoder.getStopped();
-		System.out.println(count);
+		System.out.println(count1);
 		System.out.println(distance);
 		System.out.println(direction);
 		System.out.println(stopped);
