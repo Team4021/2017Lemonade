@@ -15,6 +15,7 @@ import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.Encoder;
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -43,6 +44,9 @@ public class Robot extends IterativeRobot {
 	UsbCamera Cam0;
 	UsbCamera Cam1;
 	boolean PrecisionDriving;
+	Encoder encoder;
+	Talon encoderMotor;
+	
 	
 
 	/**
@@ -61,6 +65,7 @@ public class Robot extends IterativeRobot {
     	rearLeft = new VictorSP(2);
     	rearRight = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
+		
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
 		PrecisionLeft = leftstick.getY() * 0.5;
@@ -69,7 +74,18 @@ public class Robot extends IterativeRobot {
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
-		}
+		
+		
+		encoderMotor = new Talon(0);
+
+		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+		encoder.setMaxPeriod(.1);
+		encoder.setMinRate(10);
+		encoder.setDistancePerPulse(5);
+		encoder.setReverseDirection(true);
+		encoder.setSamplesToAverage(7);
+		encoder.reset();
+	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -113,6 +129,7 @@ public class Robot extends IterativeRobot {
 		TankDrive();
 		UpdateDash();
 		RopeClimb();
+		EncoderTest();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
 	
@@ -136,15 +153,43 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
 		SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);
-	
+		SmartDashboard.putNumber("Current", pdpCurrent);	
+		
+		SmartDashboard.putNumber("Count", encoder.get());
+		SmartDashboard.putNumber("Distance", encoder.getDistance());
+		SmartDashboard.putNumber("Raw", encoder.getRaw());
+		SmartDashboard.putNumber("Period", encoder.getPeriod());
+		SmartDashboard.putNumber("Rate", encoder.getRate());
+		SmartDashboard.putBoolean("Direction", encoder.getDirection());
+		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
+		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
+		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
+		SmartDashboard.putNumber("Current", pdpCurrent);	
 	}
 	
 	public void RopeClimb() {
-	  while(leftstick.getRawButton(1)){
+	  while(leftstick.getRawButton(5)){
 			RopeClimber.set(.5);
+			UpdateDash();
 	  }
 	  RopeClimber.set(0);
+	  UpdateDash();
 	}
+	
+	public void EncoderTest() {
+		while (leftstick.getRawButton(1) && encoder.get() > -2000) {
+			encoderMotor.set(1);
+			UpdateDash();
+		}
+		while (rightstick.getRawButton(1) && encoder.get() < 2000) {
+			encoderMotor.set(-1);
+			UpdateDash();	
+		}
+			encoderMotor.set(0);
+			UpdateDash();	
+			
+	}
+	
 	/**
 	 * This function is called periodically during test mode
 	 */
