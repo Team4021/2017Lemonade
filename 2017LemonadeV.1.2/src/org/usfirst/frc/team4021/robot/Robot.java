@@ -38,16 +38,13 @@ public class Robot extends IterativeRobot {
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	CANTalon RopeClimber = new CANTalon (0);
-	UsbCamera Cam0;
-	UsbCamera Cam1;
-	Encoder encoder;
+	//UsbCamera Cam0;
+	//UsbCamera Cam1;
 	Talon encoderMotor;
-	int count;
-	double distance;
-	double rate;
-	boolean direction;
-	boolean stopped;
+	Encoder encoder;
+
 	
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -69,25 +66,20 @@ public class Robot extends IterativeRobot {
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
 		
-		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
-		encoderMotor = new Talon(2);
-		encoder = new Encoder(0,1, false, Encoder.EncodingType.k4X);
+		//Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		//Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
+		encoderMotor = new Talon(0);
+
+		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		encoder.setMaxPeriod(.1);
 		encoder.setMinRate(10);
 		encoder.setDistancePerPulse(5);
 		encoder.setReverseDirection(true);
 		encoder.setSamplesToAverage(7);
-		int count1 = encoder.get();
-		double distance = encoder.getRaw();
-		double rate = encoder.getRate();
-		boolean direction = encoder.getDirection();
-		boolean stopped = encoder.getStopped();
-		System.out.println(count1);
-		System.out.println(distance);
-		System.out.println(direction);
-		System.out.println(stopped);
-		System.out.println(rate);
+		encoder.reset();
+
+		
+		
 	}
 
 	/**
@@ -150,24 +142,38 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Stick", TankDashLeft);
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
-		SmartDashboard.putNumber("Current", pdpCurrent);
-		SmartDashboard.putNumber("Count", count);
-		SmartDashboard.putNumber("Distance", distance);
-		SmartDashboard.putNumber("Rate", rate);
-		SmartDashboard.putBoolean("Direction", direction);
-		SmartDashboard.putBoolean("Stopped", stopped);
-	
+		SmartDashboard.putNumber("Current", pdpCurrent);	
+		
+		SmartDashboard.putNumber("Count", encoder.get());
+		SmartDashboard.putNumber("Distance", encoder.getDistance());
+		SmartDashboard.putNumber("Raw", encoder.getRaw());
+		SmartDashboard.putNumber("Period", encoder.getPeriod());
+		SmartDashboard.putNumber("Rate", encoder.getRate());
+		SmartDashboard.putBoolean("Direction", encoder.getDirection());
+		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
+		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
+		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
 	}
 	
 	public void RopeClimb() {
-	  while(leftstick.getRawButton(1)){
+	  while(leftstick.getRawButton(5)){
 			RopeClimber.set(.5);
+			UpdateDash();
 	  }
 	  RopeClimber.set(0);
+	  UpdateDash();
 	}
 	
 	public void EncoderTest() {
-		encoderMotor.set(leftstick.getX());
+		while (leftstick.getRawButton(1) && encoder.get() > -2000) {
+			encoderMotor.set(1);
+			UpdateDash();
+		}
+		while (rightstick.getRawButton(1) && encoder.get() < 2000) {
+			encoderMotor.set(-1);
+			UpdateDash();	
+		}
+			encoderMotor.set(0);
 	}
 	
 	/**
