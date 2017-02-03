@@ -174,6 +174,7 @@ public class Robot extends IterativeRobot {
 			UpdateDash();	
 		}
 			encoderMotor.set(0);
+			UpdateDash();	
 	}
 	
 	/**
