@@ -85,6 +85,7 @@ public class Robot extends IterativeRobot {
 		encoder.setReverseDirection(true);
 		encoder.setSamplesToAverage(7);
 		encoder.reset();
+		
 	}
 
 	/**
@@ -138,10 +139,10 @@ public class Robot extends IterativeRobot {
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
 			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
-			PrecisionDriving = !PrecisionDriving;
+			PrecisionDriving = true;
 		}
 		Tankdrive.tankDrive(leftstick, rightstick);
-		PrecisionDriving = !PrecisionDriving;
+
 
 
 	}
@@ -154,6 +155,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Current", pdpCurrent);
 		SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);
 		SmartDashboard.putNumber("Current", pdpCurrent);	
+		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
+		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
 		
 		SmartDashboard.putNumber("Count", encoder.get());
 		SmartDashboard.putNumber("Distance", encoder.getDistance());
@@ -162,8 +165,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Rate", encoder.getRate());
 		SmartDashboard.putBoolean("Direction", encoder.getDirection());
 		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
-		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
-		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
+		
 		SmartDashboard.putNumber("Current", pdpCurrent);	
 	}
 	
@@ -187,8 +189,8 @@ public class Robot extends IterativeRobot {
 		}
 			encoderMotor.set(0);
 			UpdateDash();	
-			
 	}
+	
 	
 	/**
 	 * This function is called periodically during test mode
