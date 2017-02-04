@@ -30,8 +30,8 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	
-	RobotDrive Tankdrive;
-	VictorSP frontLeft, frontRight, rearLeft, rearRight;
+	//RobotDrive Tankdrive;
+	//VictorSP frontLeft, frontRight, rearLeft, rearRight;
 	Joystick leftstick, rightstick;
 	double TankDashLeft;
 	double TankDashRight;
@@ -40,10 +40,9 @@ public class Robot extends IterativeRobot {
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
-	CANTalon RopeClimber = new CANTalon (0);
-	UsbCamera Cam0;
-	UsbCamera Cam1;
-	boolean PrecisionDriving;
+	//CANTalon RopeClimber = new CANTalon (0);
+	//UsbCamera Cam0;
+	//UsbCamera Cam1;
 	Encoder encoder;
 	Talon encoderMotor;
 	
@@ -59,27 +58,26 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("My Auto", customAuto);
 		chooser.addObject("Bekah's Auto", Bekahsauto);
 		SmartDashboard.putData("Auto choices", chooser);
-		
+		/*
     	frontLeft = new VictorSP(0);
     	frontRight = new VictorSP(1);
     	rearLeft = new VictorSP(2);
     	rearRight = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
-		
+		*/
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
 		PrecisionLeft = leftstick.getY() * 0.5;
 		PrecisionRight = rightstick.getY() * 0.5;
 		
-		
+		/*
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
-		
-		
+		*/
 		encoderMotor = new Talon(0);
 
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-		encoder.setMaxPeriod(.1);
+		encoder.setMaxPeriod(0);
 		encoder.setMinRate(10);
 		encoder.setDistancePerPulse(5);
 		encoder.setReverseDirection(true);
@@ -126,15 +124,15 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		TankDrive();
+		//TankDrive();
 		UpdateDash();
-		RopeClimb();
+		//RopeClimb();
 		EncoderTest();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
 	
 	}
-	
+	/*
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
 			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
@@ -145,14 +143,13 @@ public class Robot extends IterativeRobot {
 
 
 	}
-	
+	*/
 	public void UpdateDash() {
 		double pdpCurrent = pdp.getCurrent(1);
 		SmartDashboard.putNumber("Left Stick", TankDashLeft);
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
-		SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);
 		SmartDashboard.putNumber("Current", pdpCurrent);	
 		
 		SmartDashboard.putNumber("Count", encoder.get());
@@ -166,7 +163,7 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
 		SmartDashboard.putNumber("Current", pdpCurrent);	
 	}
-	
+	/*
 	public void RopeClimb() {
 	  while(leftstick.getRawButton(5)){
 			RopeClimber.set(.5);
@@ -175,7 +172,7 @@ public class Robot extends IterativeRobot {
 	  RopeClimber.set(0);
 	  UpdateDash();
 	}
-	
+	*/
 	public void EncoderTest() {
 		while (leftstick.getRawButton(1) && encoder.get() > -2000) {
 			encoderMotor.set(1);
