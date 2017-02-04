@@ -10,12 +10,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
-import com.ctre.CANTalon;
+//import com.ctre.CANTalon;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -40,12 +41,12 @@ public class Robot extends IterativeRobot {
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
-	CANTalon RopeClimber = new CANTalon (0);
+	//CANTalon RopeClimber = new CANTalon (0);
 	UsbCamera Cam0;
 	UsbCamera Cam1;
-	boolean PrecisionDriving;
-	Encoder encoder;
-	Talon encoderMotor;
+	//boolean PrecisionDriving = false;
+	//Encoder encoder;
+	//Talon encoderMotor;
 	
 	
 
@@ -75,7 +76,7 @@ public class Robot extends IterativeRobot {
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
-		
+		/*
 		encoderMotor = new Talon(0);
 
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
@@ -85,6 +86,7 @@ public class Robot extends IterativeRobot {
 		encoder.setReverseDirection(true);
 		encoder.setSamplesToAverage(7);
 		encoder.reset();
+		*/
 	}
 
 	/**
@@ -128,22 +130,22 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		TankDrive();
 		UpdateDash();
-		RopeClimb();
-		EncoderTest();
+		//RopeClimb();
+		//EncoderTest();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
+		SmartDashboard.putNumber("Precision Left", TankDashLeft * 0.5);
+		SmartDashboard.putNumber("Precision Right", TankDashRight * 0.5);
 	
 	}
 	
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
 			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
-			PrecisionDriving = !PrecisionDriving;
+			//PrecisionDriving = true;
 		}
 		Tankdrive.tankDrive(leftstick, rightstick);
-		PrecisionDriving = !PrecisionDriving;
-
-
+		//PrecisionDriving = !PrecisionDriving;
 	}
 	
 	public void UpdateDash() {
@@ -152,9 +154,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
-		SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);
-		SmartDashboard.putNumber("Current", pdpCurrent);	
-		
+		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
+		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
+
+		//SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);	
+		/*
 		SmartDashboard.putNumber("Count", encoder.get());
 		SmartDashboard.putNumber("Distance", encoder.getDistance());
 		SmartDashboard.putNumber("Raw", encoder.getRaw());
@@ -162,11 +166,9 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Rate", encoder.getRate());
 		SmartDashboard.putBoolean("Direction", encoder.getDirection());
 		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
-		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
-		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
-		SmartDashboard.putNumber("Current", pdpCurrent);	
+		*/
 	}
-	
+	/*
 	public void RopeClimb() {
 	  while(leftstick.getRawButton(5)){
 			RopeClimber.set(.5);
@@ -189,7 +191,7 @@ public class Robot extends IterativeRobot {
 			UpdateDash();	
 			
 	}
-	
+	*/
 	/**
 	 * This function is called periodically during test mode
 	 */
