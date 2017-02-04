@@ -1,4 +1,4 @@
-//2017 Lemonade Test
+//2017 Lemonade
 package org.usfirst.frc.team4021.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
