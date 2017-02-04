@@ -16,6 +16,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -43,7 +44,6 @@ public class Robot extends IterativeRobot {
 	CANTalon RopeClimber = new CANTalon (0);
 	UsbCamera Cam0;
 	UsbCamera Cam1;
-	boolean PrecisionDriving;
 	Encoder encoder;
 	Talon encoderMotor;
 	
@@ -133,28 +133,26 @@ public class Robot extends IterativeRobot {
 		EncoderTest();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
+
 	
 	}
 	
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
 			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
-			PrecisionDriving = true;
+			UpdateDash();
 		}
 		Tankdrive.tankDrive(leftstick, rightstick);
-
-
-
 	}
 	
 	public void UpdateDash() {
 		double pdpCurrent = pdp.getCurrent(1);
-		SmartDashboard.putNumber("Left Stick", TankDashLeft);
-		SmartDashboard.putNumber("Right Stick", TankDashRight);
+		SmartDashboard.putNumber("Left Stick", TankDashLeft * -1);
+		SmartDashboard.putNumber("Right Stick", TankDashRight * -1);
+		SmartDashboard.putNumber("Precision Left", TankDashLeft * -0.5);
+		SmartDashboard.putNumber("Precision Right", TankDashRight * -0.5);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
-		SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);
-		SmartDashboard.putNumber("Current", pdpCurrent);	
 		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
 		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
 		
@@ -166,7 +164,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Direction", encoder.getDirection());
 		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
 		
-		SmartDashboard.putNumber("Current", pdpCurrent);	
 	}
 	
 	public void RopeClimb() {
