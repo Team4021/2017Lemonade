@@ -174,11 +174,11 @@ public class Robot extends IterativeRobot {
 	}
 	*/
 	public void EncoderTest() {
-		while (leftstick.getRawButton(1) && encoder.get() > -2000) {
+		while (leftstick.getRawButton(1) && encoder.get() > -1983) {
 			encoderMotor.set(1);
 			UpdateDash();
 		}
-		while (rightstick.getRawButton(1) && encoder.get() < 2000) {
+		while (rightstick.getRawButton(1) && encoder.get() < 1983) {
 			encoderMotor.set(-1);
 			UpdateDash();	
 		}
