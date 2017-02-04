@@ -1,7 +1,6 @@
 //2017 Lemonade Test
 package org.usfirst.frc.team4021.robot;
 
-
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -16,6 +15,7 @@ import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.Encoder;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
+
 public class Robot extends IterativeRobot {
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
@@ -37,22 +38,23 @@ public class Robot extends IterativeRobot {
 	double TankDashRight;
 	double PrecisionLeft;
 	double PrecisionRight;
+	
+	CANTalon RopeClimber = new CANTalon (0);
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
-	CANTalon RopeClimber = new CANTalon (0);
+
 	UsbCamera Cam0;
 	UsbCamera Cam1;
-	boolean PrecisionDriving;
+	
 	Encoder encoder;
 	Talon encoderMotor;
 	
-	
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
+	
 	@Override
 	public void robotInit() {
 		chooser.addDefault("Default Auto", defaultAuto);
@@ -71,13 +73,10 @@ public class Robot extends IterativeRobot {
 		PrecisionLeft = leftstick.getY() * 0.5;
 		PrecisionRight = rightstick.getY() * 0.5;
 		
-		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
-		
 		encoderMotor = new Talon(0);
-
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		encoder.setMaxPeriod(.1);
 		encoder.setMinRate(10);
@@ -98,6 +97,7 @@ public class Robot extends IterativeRobot {
 	 * switch structure below with additional strings. If using the
 	 * SendableChooser make sure to add them to the chooser code above as well.
 	 */
+	
 	@Override
 	public void autonomousInit() {
 		autoSelected = chooser.getSelected();
@@ -108,6 +108,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during autonomous
 	 */
+	
 	@Override
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
@@ -124,6 +125,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is called periodically during operator control
 	 */
+	
 	@Override
 	public void teleopPeriodic() {
 		TankDrive();
@@ -132,29 +134,19 @@ public class Robot extends IterativeRobot {
 		EncoderTest();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
-	
 	}
 	
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
-			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
-			PrecisionDriving = !PrecisionDriving;
+			Tankdrive.tankDrive(PrecisionLeft, PrecisionRight);
 		}
 		Tankdrive.tankDrive(leftstick, rightstick);
-		PrecisionDriving = !PrecisionDriving;
-
-
 	}
 	
 	public void UpdateDash() {
-		double pdpCurrent = pdp.getCurrent(1);
 		SmartDashboard.putNumber("Left Stick", TankDashLeft);
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
-		SmartDashboard.putNumber("TalonSRX", SRX);
-		SmartDashboard.putNumber("Current", pdpCurrent);
-		SmartDashboard.putBoolean("Precison Driving", PrecisionDriving);
-		SmartDashboard.putNumber("Current", pdpCurrent);	
-		
+		SmartDashboard.putNumber("TalonSRX", SRX);	
 		SmartDashboard.putNumber("Count", encoder.get());
 		SmartDashboard.putNumber("Distance", encoder.getDistance());
 		SmartDashboard.putNumber("Raw", encoder.getRaw());
@@ -187,12 +179,12 @@ public class Robot extends IterativeRobot {
 		}
 			encoderMotor.set(0);
 			UpdateDash();	
-			
 	}
 	
 	/**
 	 * This function is called periodically during test mode
 	 */
+	
 	@Override
 	public void testPeriodic() {
 	
