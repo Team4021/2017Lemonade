@@ -70,8 +70,6 @@ public class Robot extends IterativeRobot {
 		
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
-		PrecisionLeft = leftstick.getY() * 0.5;
-		PrecisionRight = rightstick.getY() * 0.5;
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
@@ -137,20 +135,26 @@ public class Robot extends IterativeRobot {
 		UpdateDash();
 		//RopeClimb();
 		//EncoderTest();
-		TankDashLeft = leftstick.getY();
-		TankDashRight = rightstick.getY();
+
 	}
 	
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
+			PrecisionLeft = leftstick.getY() * 0.5;
+			PrecisionRight = rightstick.getY() * 0.5;
 			Tankdrive.tankDrive(PrecisionLeft, PrecisionRight);
+			UpdateDash();
 		}
 		Tankdrive.tankDrive(leftstick, rightstick);
 	}
 	
 	public void UpdateDash() {
-		SmartDashboard.putNumber("Left Stick", TankDashLeft);
-		SmartDashboard.putNumber("Right Stick", TankDashRight);
+		TankDashLeft = leftstick.getY();
+		TankDashRight = rightstick.getY();
+		SmartDashboard.putNumber("Left Stick", TankDashLeft * -1);
+		SmartDashboard.putNumber("Right Stick", TankDashRight * -1);
+		SmartDashboard.putNumber("Precision Left", TankDashLeft * -0.5);
+		SmartDashboard.putNumber("Precision Right", TankDashRight * -0.5);
 		SmartDashboard.putNumber("TalonSRX", SRX);	
 		/*
 		SmartDashboard.putNumber("Count", encoder.get());
