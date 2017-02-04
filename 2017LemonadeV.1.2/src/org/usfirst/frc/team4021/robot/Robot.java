@@ -25,9 +25,9 @@ import edu.wpi.first.wpilibj.Encoder;
  */
 
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	final String Bekahsauto = "Bekah's Auto";
+	final String rightAuto = "Right Auto";
+	final String middleAuto = "Middle Auto";
+	final String leftAuto = "Left Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	
@@ -57,9 +57,9 @@ public class Robot extends IterativeRobot {
 	
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		chooser.addObject("Bekah's Auto", Bekahsauto);
+		chooser.addDefault("Left Auto", leftAuto);
+		chooser.addObject("Middle Auto", middleAuto);
+		chooser.addObject("Right Auto", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		
     	frontLeft = new VictorSP(0);
@@ -100,7 +100,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autoSelected = chooser.getSelected();
-		 autoSelected = SmartDashboard.getString("Auto Selector",defaultAuto);
+		 autoSelected = SmartDashboard.getString("Auto Selector",leftAuto);
 		System.out.println("Auto selected: " + autoSelected);
 	}
 
@@ -111,11 +111,16 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
-		case customAuto:
+		case leftAuto:
 			// Put auto code here
 			break;
-		case defaultAuto:
+			
+		case middleAuto:
 		default:
+			// Put auto code here
+			break;
+			
+		case rightAuto:
 			// Put auto code here
 			break;
 			}
