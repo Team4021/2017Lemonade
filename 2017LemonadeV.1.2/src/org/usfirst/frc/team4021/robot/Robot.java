@@ -44,12 +44,13 @@ public class Robot extends IterativeRobot {
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	UsbCamera Cam0;
 	UsbCamera Cam1;
-	
+
 	Encoder encoder;
 	Talon encoderMotor;
 	CANTalon RopeClimber = new CANTalon (0);
 	
-	
+	Talon Dump;
+
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -83,6 +84,8 @@ public class Robot extends IterativeRobot {
 		encoder.setReverseDirection(true);
 		encoder.setSamplesToAverage(7);
 		encoder.reset();
+		
+		Dump = new Talon(1);
 		
 	}
 
@@ -132,12 +135,14 @@ public class Robot extends IterativeRobot {
 		UpdateDash();
 		RopeClimb();
 		EncoderTest();
+		BallHandler();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
 		PrecisionLeft = leftstick.getY() * 0.5;
 		PrecisionRight = rightstick.getY() * 0.5;
 
 	}
+	
 	
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
@@ -190,6 +195,15 @@ public class Robot extends IterativeRobot {
 			UpdateDash();	
 	}
 	
+	public void BallHandler(){
+		while(rightstick.getRawButton(6)) {
+			Dump.set(.5);
+		}
+		while(rightstick.getRawButton(4)) {
+			Dump.set(-.5);
+		}
+		
+	}
 	
 	/**
 	 * This function is called periodically during test mode
