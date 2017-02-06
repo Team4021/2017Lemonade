@@ -1,4 +1,4 @@
-//2017 Lemonade Test
+//2017 Lemonade
 package org.usfirst.frc.team4021.robot;
 
 
@@ -25,9 +25,9 @@ import edu.wpi.first.wpilibj.Encoder;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
-	final String Bekahsauto = "Bekah's Auto";
+	final String leftAuto = "Left Auto";
+	final String middleAuto = "Middle Auto";
+	final String rightAuto = "Right Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	
@@ -38,14 +38,16 @@ public class Robot extends IterativeRobot {
 	double TankDashRight;
 	double PrecisionLeft;
 	double PrecisionRight;
+	
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
-	CANTalon RopeClimber = new CANTalon (0);
 	UsbCamera Cam0;
 	UsbCamera Cam1;
+	
 	Encoder encoder;
 	Talon encoderMotor;
+	CANTalon RopeClimber = new CANTalon (0);
 	
 	
 
@@ -55,9 +57,9 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
-		chooser.addObject("Bekah's Auto", Bekahsauto);
+		chooser.addDefault("Left Auto", leftAuto);
+		chooser.addObject("Middle Auto", middleAuto);
+		chooser.addObject("Right Auto", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
 		
     	frontLeft = new VictorSP(0);
@@ -66,18 +68,14 @@ public class Robot extends IterativeRobot {
     	rearRight = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		
-		leftstick = new Joystick(1);
-		rightstick = new Joystick(2);
-		PrecisionLeft = leftstick.getY() * 0.5;
-		PrecisionRight = rightstick.getY() * 0.5;
-		
+		rightstick = new Joystick(1);
+		leftstick = new Joystick(2);		
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
 		
 		encoderMotor = new Talon(0);
-
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		encoder.setMaxPeriod(.1);
 		encoder.setMinRate(10);
@@ -102,7 +100,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		autoSelected = chooser.getSelected();
-		 autoSelected = SmartDashboard.getString("Auto Selector",defaultAuto);
+		 autoSelected = SmartDashboard.getString("Auto Selector",middleAuto);
 		System.out.println("Auto selected: " + autoSelected);
 	}
 
@@ -112,11 +110,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
-		case customAuto:
+		case leftAuto:
 			// Put auto code here
 			break;
-		case defaultAuto:
+		case middleAuto:
 		default:
+			// Put auto code here
+			break;
+		case rightAuto:
 			// Put auto code here
 			break;
 			}
@@ -133,13 +134,14 @@ public class Robot extends IterativeRobot {
 		EncoderTest();
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
+		PrecisionLeft = leftstick.getY() * 0.5;
+		PrecisionRight = rightstick.getY() * 0.5;
 
-	
 	}
 	
 	public void TankDrive() {
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
-			Tankdrive.tankDrive(leftstick.getY() * 0.5, rightstick.getY() * 0.5);
+			Tankdrive.tankDrive(PrecisionLeft, PrecisionRight);
 			UpdateDash();
 		}
 		Tankdrive.tankDrive(leftstick, rightstick);
@@ -147,10 +149,10 @@ public class Robot extends IterativeRobot {
 	
 	public void UpdateDash() {
 		double pdpCurrent = pdp.getCurrent(1);
-		SmartDashboard.putNumber("Left Stick", TankDashLeft * -1);
-		SmartDashboard.putNumber("Right Stick", TankDashRight * -1);
-		SmartDashboard.putNumber("Precision Left", TankDashLeft * -0.5);
-		SmartDashboard.putNumber("Precision Right", TankDashRight * -0.5);
+		SmartDashboard.putNumber("Left Stick", TankDashLeft);
+		SmartDashboard.putNumber("Right Stick", TankDashRight);
+		SmartDashboard.putNumber("Precision Left", PrecisionLeft);
+		SmartDashboard.putNumber("Precision Right", PrecisionRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
 		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
