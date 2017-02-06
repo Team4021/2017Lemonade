@@ -116,11 +116,24 @@ public class Robot extends IterativeRobot {
 			
 		case middleAuto:
 		default:
-			// Put auto code here
+			Tankdrive.tankDrive(0.5, 0.5);
+			Timer.delay(1);
+			Tankdrive.tankDrive(0, 0.5);
+			Timer.delay(1);
+			Tankdrive.tankDrive(0.5, 0.5);
+			Timer.delay(2);
+			Tankdrive.tankDrive(0.5, 0);
+			Timer.delay(1);
+			Tankdrive.tankDrive(1, 1);
+			Timer.delay(5);
+			Tankdrive.tankDrive(0, 1);
+			Timer.delay(3);
+			
 			break;
 			
 		case rightAuto:
-			// Put auto code here
+			Tankdrive.tankDrive(0.5, 0.5);
+			Timer.delay(1);
 			break;
 			}
 		}
@@ -156,6 +169,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Precision Left", TankDashLeft * -0.5);
 		SmartDashboard.putNumber("Precision Right", TankDashRight * -0.5);
 		SmartDashboard.putNumber("TalonSRX", SRX);	
+		SmartDashboard.putBoolean("Left Trigger", rightstick.getRawButton(1));
+		SmartDashboard.putBoolean("Right Trigger", leftstick.getRawButton(1));
 		/*
 		SmartDashboard.putNumber("Count", encoder.get());
 		SmartDashboard.putNumber("Distance", encoder.getDistance());
@@ -165,8 +180,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Direction", encoder.getDirection());
 		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
 		*/
-		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
-		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
 		SmartDashboard.putNumber("Current", pdpCurrent);	
 	}
 	/*
