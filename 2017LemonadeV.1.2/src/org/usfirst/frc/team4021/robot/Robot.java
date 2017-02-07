@@ -32,8 +32,9 @@ public class Robot extends IterativeRobot {
 	SendableChooser<String> chooser = new SendableChooser<>();
 	
 	RobotDrive Tankdrive;
-	VictorSP frontLeft, frontRight, rearLeft, rearRight;
+	VictorSP frontLeft, frontRight, rearLeft, rearRight;*/
 	Joystick leftstick, rightstick;
+	
 	double TankDashLeft;
 	double TankDashRight;
 	double PrecisionLeft;
@@ -49,7 +50,7 @@ public class Robot extends IterativeRobot {
 	Talon encoderMotor;
 	CANTalon RopeClimber = new CANTalon (0);
 	
-	Talon Dump;
+	VictorSP Dump;
 
 
 	/**
@@ -85,7 +86,7 @@ public class Robot extends IterativeRobot {
 		encoder.setSamplesToAverage(7);
 		encoder.reset();
 		
-		Dump = new Talon(1);
+		Dump = new VictorSP(1);
 		
 	}
 
@@ -136,10 +137,12 @@ public class Robot extends IterativeRobot {
 		RopeClimb();
 		EncoderTest();
 		BallHandler();
+		
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
 		PrecisionLeft = leftstick.getY() * 0.5;
 		PrecisionRight = rightstick.getY() * 0.5;
+		
 
 	}
 	
@@ -153,6 +156,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void UpdateDash() {
+		
 		double pdpCurrent = pdp.getCurrent(1);
 		SmartDashboard.putNumber("Left Stick", TankDashLeft);
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
@@ -170,7 +174,8 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Rate", encoder.getRate());
 		SmartDashboard.putBoolean("Direction", encoder.getDirection());
 		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
-		
+		SmartDashboard.putBoolean("Ballout", rightstick.getRawButton(2));
+		SmartDashboard.putBoolean("Ballin", leftstick.getRawButton(2));
 	}
 	
 	public void RopeClimb() {
@@ -196,12 +201,13 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void BallHandler(){
-		while(rightstick.getRawButton(6)) {
+		while(rightstick.getRawButton(2)) {
 			Dump.set(.5);
 		}
-		while(rightstick.getRawButton(4)) {
+		while(leftstick.getRawButton(2)) {
 			Dump.set(-.5);
 		}
+		Dump.set(0);
 		
 	}
 	
