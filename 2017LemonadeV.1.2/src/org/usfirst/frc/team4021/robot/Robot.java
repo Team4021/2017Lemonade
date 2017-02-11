@@ -39,6 +39,10 @@ public class Robot extends IterativeRobot {
 	double PrecisionLeft;
 	double PrecisionRight;
 	
+<<<<<<< HEAD
+=======
+	CANTalon RopeClimber = new CANTalon (0);
+>>>>>>> refs/heads/TestRobot
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -47,7 +51,11 @@ public class Robot extends IterativeRobot {
 	
 	Encoder encoder;
 	Talon encoderMotor;
+<<<<<<< HEAD
 	CANTalon RopeClimber = new CANTalon (0);
+=======
+	boolean autoFirst;
+>>>>>>> refs/heads/TestRobot
 	
 	
 
@@ -74,7 +82,10 @@ public class Robot extends IterativeRobot {
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
+<<<<<<< HEAD
 		
+=======
+>>>>>>> refs/heads/TestRobot
 		encoderMotor = new Talon(0);
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		encoder.setMaxPeriod(.1);
@@ -132,10 +143,13 @@ public class Robot extends IterativeRobot {
 		UpdateDash();
 		RopeClimb();
 		EncoderTest();
+<<<<<<< HEAD
 		TankDashLeft = leftstick.getY();
 		TankDashRight = rightstick.getY();
 		PrecisionLeft = leftstick.getY() * 0.5;
 		PrecisionRight = rightstick.getY() * 0.5;
+=======
+>>>>>>> refs/heads/TestRobot
 
 	}
 	
@@ -148,6 +162,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void UpdateDash() {
+<<<<<<< HEAD
 		double pdpCurrent = pdp.getCurrent(1);
 		SmartDashboard.putNumber("Left Stick", TankDashLeft);
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
@@ -157,6 +172,17 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Current", pdpCurrent);
 		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
 		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
+=======
+		TankDashLeft = leftstick.getY();
+		TankDashRight = rightstick.getY();
+		SmartDashboard.putNumber("Left Stick", TankDashLeft * -1);
+		SmartDashboard.putNumber("Right Stick", TankDashRight * -1);
+		SmartDashboard.putNumber("Precision Left", TankDashLeft * -0.5);
+		SmartDashboard.putNumber("Precision Right", TankDashRight * -0.5);
+		SmartDashboard.putNumber("TalonSRX", SRX);	
+		SmartDashboard.putBoolean("Left Trigger", rightstick.getRawButton(1));
+		SmartDashboard.putBoolean("Right Trigger", leftstick.getRawButton(1));
+>>>>>>> refs/heads/TestRobot
 		
 		SmartDashboard.putNumber("Count", encoder.get());
 		SmartDashboard.putNumber("Distance", encoder.getDistance());
@@ -166,6 +192,10 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Direction", encoder.getDirection());
 		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
 		
+<<<<<<< HEAD
+=======
+		SmartDashboard.putNumber("Current", pdpCurrent);	
+>>>>>>> refs/heads/TestRobot
 	}
 	
 	public void RopeClimb() {
@@ -190,7 +220,10 @@ public class Robot extends IterativeRobot {
 			UpdateDash();	
 	}
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> refs/heads/TestRobot
 	/**
 	 * This function is called periodically during test mode
 	 */
