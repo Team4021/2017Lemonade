@@ -38,6 +38,8 @@ public class Robot extends IterativeRobot {
 	double TankDashRight;
 	double PrecisionLeft;
 	double PrecisionRight;
+	double finalRight;
+	double finalLeft;
 	
 	//CANTalon RopeClimber = new CANTalon (0);
 	double SRX;
@@ -178,13 +180,19 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void TankDrive() {
+		finalLeft = leftstick.getY();
+		finalRight = rightstick.getY();
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
-			PrecisionLeft = leftstick.getY() * 0.5;
-			PrecisionRight = rightstick.getY() * 0.5;
-			Tankdrive.tankDrive(PrecisionLeft, PrecisionRight);
+			finalLeft = leftstick.getY() * 0.5;
+			finalRight = rightstick.getY() * 0.5;
 			UpdateDash();
 		}
-		Tankdrive.tankDrive(leftstick, rightstick);
+		while (rightstick.getRawButton(2)) {
+			finalLeft = leftstick.getY() * -1;
+			finalRight = rightstick.getY() * -1;
+			UpdateDash();
+		}
+		Tankdrive.tankDrive(finalLeft, finalRight);
 	}
 	
 	public void UpdateDash() {
