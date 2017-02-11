@@ -114,15 +114,15 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
 		case leftAuto:
-			if(autoFirst == false){
-				Tankdrive.setSafetyEnabled(true);
+			if(autoFirst == true){
+				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(.5);
-				Tankdrive.tankDrive(0.75, 0.75);
-				Timer.delay(1.15);
-				Tankdrive.tankDrive(.8, -.8);
+				Tankdrive.tankDrive(0.6, 0.6);
+				Timer.delay(2.1);
+				Tankdrive.tankDrive(.66, -.66);
 				Timer.delay(.25);
-				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(.4);
+				Tankdrive.tankDrive(.3, .3);
+				Timer.delay(.3);
 				Tankdrive.tankDrive(0,0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
@@ -148,11 +148,11 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(0.75, 0.75);
-				Timer.delay(1.15);
+				Timer.delay(1.17);
 				Tankdrive.tankDrive(-.8, .8);
 				Timer.delay(.25);
-				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(.4);
+				Tankdrive.tankDrive(.4, .4);
+				Timer.delay(.8);
 				Tankdrive.tankDrive(0,0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
