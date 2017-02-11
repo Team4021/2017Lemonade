@@ -39,10 +39,7 @@ public class Robot extends IterativeRobot {
 	double PrecisionLeft;
 	double PrecisionRight;
 	
-<<<<<<< HEAD
-=======
 	CANTalon RopeClimber = new CANTalon (0);
->>>>>>> refs/heads/TestRobot
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -51,12 +48,9 @@ public class Robot extends IterativeRobot {
 	
 	Encoder encoder;
 	Talon encoderMotor;
-<<<<<<< HEAD
-	CANTalon RopeClimber = new CANTalon (0);
-=======
 	boolean autoFirst;
->>>>>>> refs/heads/TestRobot
-	
+	double finalLeft;
+	double finalRight;
 	
 
 	/**
@@ -82,10 +76,6 @@ public class Robot extends IterativeRobot {
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
-<<<<<<< HEAD
-		
-=======
->>>>>>> refs/heads/TestRobot
 		encoderMotor = new Talon(0);
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		encoder.setMaxPeriod(.1);
@@ -143,47 +133,35 @@ public class Robot extends IterativeRobot {
 		UpdateDash();
 		RopeClimb();
 		EncoderTest();
-<<<<<<< HEAD
-		TankDashLeft = leftstick.getY();
-		TankDashRight = rightstick.getY();
-		PrecisionLeft = leftstick.getY() * 0.5;
-		PrecisionRight = rightstick.getY() * 0.5;
-=======
->>>>>>> refs/heads/TestRobot
-
 	}
 	
 	public void TankDrive() {
+		finalLeft = leftstick.getY();
+		finalRight = rightstick.getY();
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
-			Tankdrive.tankDrive(PrecisionLeft, PrecisionRight);
+			finalLeft = leftstick.getY() * 0.5;
+			finalRight = rightstick.getY() * 0.5;
+			Tankdrive.tankDrive(finalLeft, finalRight);
 			UpdateDash();
 		}
-		Tankdrive.tankDrive(leftstick, rightstick);
+		while (rightstick.getRawButton(2)) {
+			finalLeft = leftstick.getY() * -1;
+			finalRight = rightstick.getY() * -1;
+			Tankdrive.tankDrive(finalLeft, finalRight);
+			UpdateDash();
+		}
+		Tankdrive.tankDrive(finalLeft, finalRight);
 	}
 	
 	public void UpdateDash() {
-<<<<<<< HEAD
 		double pdpCurrent = pdp.getCurrent(1);
-		SmartDashboard.putNumber("Left Stick", TankDashLeft);
-		SmartDashboard.putNumber("Right Stick", TankDashRight);
-		SmartDashboard.putNumber("Precision Left", PrecisionLeft);
-		SmartDashboard.putNumber("Precision Right", PrecisionRight);
 		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
-		SmartDashboard.putBoolean("Left Trigger", leftstick.getRawButton(1));
+		SmartDashboard.putNumber("Left Stick", finalLeft);
+		SmartDashboard.putNumber("Right Stick", finalRight);
+		SmartDashboard.putBoolean("Rope Drive", rightstick.getRawButton(2));
+		SmartDashboard.putBoolean("Trigger", leftstick.getRawButton(1) | rightstick.getRawButton(1));
 		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
-=======
-		TankDashLeft = leftstick.getY();
-		TankDashRight = rightstick.getY();
-		SmartDashboard.putNumber("Left Stick", TankDashLeft * -1);
-		SmartDashboard.putNumber("Right Stick", TankDashRight * -1);
-		SmartDashboard.putNumber("Precision Left", TankDashLeft * -0.5);
-		SmartDashboard.putNumber("Precision Right", TankDashRight * -0.5);
-		SmartDashboard.putNumber("TalonSRX", SRX);	
-		SmartDashboard.putBoolean("Left Trigger", rightstick.getRawButton(1));
-		SmartDashboard.putBoolean("Right Trigger", leftstick.getRawButton(1));
->>>>>>> refs/heads/TestRobot
-		
 		SmartDashboard.putNumber("Count", encoder.get());
 		SmartDashboard.putNumber("Distance", encoder.getDistance());
 		SmartDashboard.putNumber("Raw", encoder.getRaw());
@@ -192,10 +170,6 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Direction", encoder.getDirection());
 		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
 		
-<<<<<<< HEAD
-=======
-		SmartDashboard.putNumber("Current", pdpCurrent);	
->>>>>>> refs/heads/TestRobot
 	}
 	
 	public void RopeClimb() {
@@ -219,11 +193,7 @@ public class Robot extends IterativeRobot {
 			encoderMotor.set(0);
 			UpdateDash();	
 	}
-	
-<<<<<<< HEAD
-	
-=======
->>>>>>> refs/heads/TestRobot
+
 	/**
 	 * This function is called periodically during test mode
 	 */
