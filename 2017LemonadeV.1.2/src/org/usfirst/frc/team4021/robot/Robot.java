@@ -44,8 +44,8 @@ public class Robot extends IterativeRobot {
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 
-	UsbCamera Cam0;
-	UsbCamera Cam1;
+	//UsbCamera Cam0;
+	//UsbCamera Cam1;
 	
 	//Encoder encoder;
 	//Talon encoderMotor;
@@ -72,8 +72,8 @@ public class Robot extends IterativeRobot {
 		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
 		
-		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
+		//Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		//Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		/*
 		encoderMotor = new Talon(0);
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
@@ -114,16 +114,16 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
 		case leftAuto:
-			if(autoFirst == true){
-				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(2);
-				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(5);
-				Tankdrive.tankDrive(.5, -.5);
+			if(autoFirst == false){
+				Tankdrive.setSafetyEnabled(true);
 				Timer.delay(.5);
-				Tankdrive.tankDrive(.3, .3);
-				Timer.delay(2);
-				Tankdrive.tankDrive(-.6, -.6);
+				Tankdrive.tankDrive(0.75, 0.75);
+				Timer.delay(1.15);
+				Tankdrive.tankDrive(.8, -.8);
+				Timer.delay(.25);
+				Tankdrive.tankDrive(.5, .5);
+				Timer.delay(.4);
+				Tankdrive.tankDrive(0,0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
 			}
@@ -132,12 +132,11 @@ public class Robot extends IterativeRobot {
 		default:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(1);
-				Tankdrive.tankDrive(0.5, 0.5);
-				Timer.delay(4);
-				Tankdrive.tankDrive(-0.5, -0.5);
-				Timer.delay(1.5);
-				Tankdrive.tankDrive(0.9, 0.4);
+				Timer.delay(0.5);
+				Tankdrive.tankDrive(0.6, 0.6);
+				Timer.delay(1.3);
+				Tankdrive.tankDrive(0, 0);
+
 				
 				
 				autoFirst = false;
@@ -147,16 +146,14 @@ public class Robot extends IterativeRobot {
 		case rightAuto:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(6);
-				Tankdrive.tankDrive(.8, .8);
-				Timer.delay(2);
-				Tankdrive.tankDrive(.5, -.4);
-				Timer.delay(3);
+				Timer.delay(.5);
+				Tankdrive.tankDrive(0.75, 0.75);
+				Timer.delay(1.15);
+				Tankdrive.tankDrive(-.8, .8);
+				Timer.delay(.25);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(4);
+				Timer.delay(.4);
 				Tankdrive.tankDrive(0,0);
-				Timer.delay(3);
-				Tankdrive.tankDrive(-.7, -.7);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
 			}
