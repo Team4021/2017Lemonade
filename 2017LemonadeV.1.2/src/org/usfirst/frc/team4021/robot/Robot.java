@@ -100,26 +100,66 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
+		autoFirst = true;
 		autoSelected = chooser.getSelected();
-		 autoSelected = SmartDashboard.getString("Auto Selector",middleAuto);
+		autoSelected = SmartDashboard.getString("Auto Selector",autoSelected);
 		System.out.println("Auto selected: " + autoSelected);
 	}
 
 	/**
 	 * This function is called periodically during autonomous
 	 */
+	
 	@Override
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
 		case leftAuto:
-			// Put auto code here
+			if(autoFirst == true){
+				Tankdrive.setSafetyEnabled(false);
+				Timer.delay(2);
+				Tankdrive.tankDrive(.5, .5);
+				Timer.delay(5);
+				Tankdrive.tankDrive(.5, -.5);
+				Timer.delay(.5);
+				Tankdrive.tankDrive(.3, .3);
+				Timer.delay(2);
+				Tankdrive.tankDrive(-.6, -.6);
+				autoFirst = false;
+				Tankdrive.setSafetyEnabled(true);
+			}
 			break;
 		case middleAuto:
 		default:
-			// Put auto code here
+			if(autoFirst == true){
+				Tankdrive.setSafetyEnabled(false);
+				Timer.delay(1);
+				Tankdrive.tankDrive(0.5, 0.5);
+				Timer.delay(4);
+				Tankdrive.tankDrive(-0.5, -0.5);
+				Timer.delay(1.5);
+				Tankdrive.tankDrive(0.9, 0.4);
+				
+				
+				autoFirst = false;
+				Tankdrive.setSafetyEnabled(true);
+			}
 			break;
 		case rightAuto:
-			// Put auto code here
+			if(autoFirst == true){
+				Tankdrive.setSafetyEnabled(false);
+				Timer.delay(6);
+				Tankdrive.tankDrive(.8, .8);
+				Timer.delay(2);
+				Tankdrive.tankDrive(.5, -.4);
+				Timer.delay(3);
+				Tankdrive.tankDrive(.5, .5);
+				Timer.delay(4);
+				Tankdrive.tankDrive(0,0);
+				Timer.delay(3);
+				Tankdrive.tankDrive(-.7, -.7);
+				autoFirst = false;
+				Tankdrive.setSafetyEnabled(true);
+			}
 			break;
 			}
 		}
