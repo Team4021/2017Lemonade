@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.Timer;
 import com.ctre.CANTalon;
 import edu.wpi.cscore.UsbCamera;
-//import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -60,8 +60,8 @@ public class Robot extends IterativeRobot {
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		rightstick = new Joystick(1);
 		leftstick = new Joystick(2);	
-		//Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		//Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
+		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
 	}
 	/**
