@@ -8,12 +8,10 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import com.ctre.CANTalon;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+//import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -40,7 +38,6 @@ public class Robot extends IterativeRobot {
 	UsbCamera Cam0;
 	UsbCamera Cam1;
 	Encoder encoder;
-	Talon encoderMotor;
 	boolean autoFirst;
 	double finalLeft;
 	double finalRight;
@@ -57,22 +54,14 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Right Auto", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
     	frontLeft = new VictorSP(0);
-    	frontRight = new VictorSP(1);
-    	rearLeft = new VictorSP(2);
-    	rearRight = new VictorSP(3);
+    	rearRight = new VictorSP(1);
+    	frontRight = new VictorSP(2);
+    	rearLeft = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		rightstick = new Joystick(1);
 		leftstick = new Joystick(2);	
-		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
-		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
-		encoderMotor = new Talon(0);
-		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-		encoder.setMaxPeriod(.1);
-		encoder.setMinRate(10);
-		encoder.setDistancePerPulse(5);
-		encoder.setReverseDirection(true);
-		encoder.setSamplesToAverage(7);
-		encoder.reset();
+		//Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
+		//Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
 	}
 	/**
@@ -158,7 +147,6 @@ public class Robot extends IterativeRobot {
 		TankDrive();
 		UpdateDash();
 		RopeClimb();
-		EncoderTest();
 	}
 	
 	public void TankDrive() {
@@ -188,18 +176,11 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putBoolean("Rope Drive", rightstick.getRawButton(2));
 		SmartDashboard.putBoolean("Trigger", leftstick.getRawButton(1) | rightstick.getRawButton(1));
 		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
-		SmartDashboard.putNumber("Count", encoder.get());
-		SmartDashboard.putNumber("Distance", encoder.getDistance());
-		SmartDashboard.putNumber("Raw", encoder.getRaw());
-		SmartDashboard.putNumber("Period", encoder.getPeriod());
-		SmartDashboard.putNumber("Rate", encoder.getRate());
-		SmartDashboard.putBoolean("Direction", encoder.getDirection());
-		SmartDashboard.putBoolean("Stopped", encoder.getStopped());
 		
 	}
 	
 	public void RopeClimb() {
-	  while(leftstick.getRawButton(5)){
+	  while(rightstick.getRawButton(5)){
 			RopeClimber.set(.5);
 			UpdateDash();
 	  }
@@ -207,18 +188,6 @@ public class Robot extends IterativeRobot {
 	  UpdateDash();
 	}
 	
-	public void EncoderTest() {
-		while (leftstick.getRawButton(1) && encoder.get() > -2000) {
-			encoderMotor.set(1);
-			UpdateDash();
-		}
-		while (rightstick.getRawButton(1) && encoder.get() < 2000) {
-			encoderMotor.set(-1);
-			UpdateDash();	
-		}
-			encoderMotor.set(0);
-			UpdateDash();	
-	}
 
 	/**
 	 * This function is called periodically during test mode
