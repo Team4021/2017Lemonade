@@ -30,22 +30,15 @@ public class Robot extends IterativeRobot {
 	final String rightAuto = "Right Auto";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	
 	RobotDrive Tankdrive;
 	VictorSP frontLeft, frontRight, rearLeft, rearRight;
 	Joystick leftstick, rightstick;
-	double TankDashLeft;
-	double TankDashRight;
-	double PrecisionLeft;
-	double PrecisionRight;
-	
 	CANTalon RopeClimber = new CANTalon (0);
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	UsbCamera Cam0;
 	UsbCamera Cam1;
-	
 	Encoder encoder;
 	Talon encoderMotor;
 	boolean autoFirst;
@@ -63,19 +56,15 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Middle Auto", middleAuto);
 		chooser.addObject("Right Auto", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-		
     	frontLeft = new VictorSP(0);
     	frontRight = new VictorSP(1);
     	rearLeft = new VictorSP(2);
     	rearRight = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
-		
 		rightstick = new Joystick(1);
-		leftstick = new Joystick(2);		
-		
+		leftstick = new Joystick(2);	
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
-		
 		encoderMotor = new Talon(0);
 		encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
 		encoder.setMaxPeriod(.1);
@@ -137,8 +126,6 @@ public class Robot extends IterativeRobot {
 				Tankdrive.tankDrive(-0.5, -0.5);
 				Timer.delay(1.5);
 				Tankdrive.tankDrive(0.9, 0.4);
-				
-				
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
 			}
