@@ -58,8 +58,8 @@ public class Robot extends IterativeRobot {
     	frontRight = new VictorSP(2);
     	rearLeft = new VictorSP(3);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
-		rightstick = new Joystick(1);
-		leftstick = new Joystick(2);	
+		rightstick = new Joystick(2);
+		leftstick = new Joystick(1);	
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
@@ -93,14 +93,14 @@ public class Robot extends IterativeRobot {
 		case leftAuto:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(2);
+				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(5);
+				Timer.delay(2.6);
 				Tankdrive.tankDrive(.5, -.5);
 				Timer.delay(.5);
-				Tankdrive.tankDrive(.3, .3);
-				Timer.delay(2);
-				Tankdrive.tankDrive(-.6, -.6);
+				Tankdrive.tankDrive(.5, .5);
+				Timer.delay(0.5);
+				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
 			}
@@ -109,12 +109,10 @@ public class Robot extends IterativeRobot {
 		default:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(1);
+				Timer.delay(0.5);
 				Tankdrive.tankDrive(0.5, 0.5);
-				Timer.delay(4);
-				Tankdrive.tankDrive(-0.5, -0.5);
-				Timer.delay(1.5);
-				Tankdrive.tankDrive(0.9, 0.4);
+				Timer.delay(1.7);
+				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
 			}
@@ -122,16 +120,14 @@ public class Robot extends IterativeRobot {
 		case rightAuto:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(6);
-				Tankdrive.tankDrive(.8, .8);
-				Timer.delay(2);
-				Tankdrive.tankDrive(.5, -.4);
-				Timer.delay(3);
+				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(4);
-				Tankdrive.tankDrive(0,0);
-				Timer.delay(3);
-				Tankdrive.tankDrive(-.7, -.7);
+				Timer.delay(2.6);
+				Tankdrive.tankDrive(-.5, .5);
+				Timer.delay(.5);
+				Tankdrive.tankDrive(.5, .5);
+				Timer.delay(0.5);
+				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
 			}
@@ -150,17 +146,17 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void TankDrive() {
-		finalLeft = leftstick.getY();
-		finalRight = rightstick.getY();
+		finalLeft = leftstick.getY() * -1;
+		finalRight = rightstick.getY() * -1;
 		while (leftstick.getRawButton(1) | rightstick.getRawButton(1)) {
-			finalLeft = leftstick.getY() * 0.5;
-			finalRight = rightstick.getY() * 0.5;
+			finalLeft = leftstick.getY() * -0.5;
+			finalRight = rightstick.getY() * -0.5;
 			Tankdrive.tankDrive(finalLeft, finalRight);
 			UpdateDash();
 		}
 		while (rightstick.getRawButton(2)) {
-			finalLeft = leftstick.getY() * -1;
-			finalRight = rightstick.getY() * -1;
+			finalLeft = leftstick.getY();
+			finalRight = rightstick.getY();
 			Tankdrive.tankDrive(finalLeft, finalRight);
 			UpdateDash();
 		}
@@ -174,16 +170,19 @@ public class Robot extends IterativeRobot {
 		SmartDashboard.putNumber("Left Stick", finalLeft);
 		SmartDashboard.putNumber("Right Stick", finalRight);
 		SmartDashboard.putBoolean("Rope Drive", rightstick.getRawButton(2));
-		SmartDashboard.putBoolean("Trigger", leftstick.getRawButton(1) | rightstick.getRawButton(1));
-		SmartDashboard.putBoolean("Right Trigger", rightstick.getRawButton(1));
+		SmartDashboard.putBoolean("Precision Driving", leftstick.getRawButton(1) | rightstick.getRawButton(1));
 		
 	}
 	
 	public void RopeClimb() {
-	  while(rightstick.getRawButton(5)){
-			RopeClimber.set(.5);
+		while(rightstick.getRawButton(5)){
+			RopeClimber.set(.8);
 			UpdateDash();
 	  }
+		while(rightstick.getRawButton(6)){
+			RopeClimber.set(-.8);
+			UpdateDash();
+		}
 	  RopeClimber.set(0);
 	  UpdateDash();
 	}
