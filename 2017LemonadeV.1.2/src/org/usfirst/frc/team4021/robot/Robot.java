@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
 	boolean autoFirst;
 	double finalLeft;
 	double finalRight;
+	boolean holdRope;
 	
 
 	/**
@@ -62,6 +63,7 @@ public class Robot extends IterativeRobot {
 		leftstick = new Joystick(1);	
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
+		holdRope = false;
 		
 	}
 	/**
@@ -143,6 +145,10 @@ public class Robot extends IterativeRobot {
 		TankDrive();
 		UpdateDash();
 		RopeClimb();
+		System.out.println(holdRope);
+		if(holdRope == true){
+			RopeClimber.set(0.3);
+		}
 	}
 	
 	public void TankDrive() {
@@ -182,6 +188,9 @@ public class Robot extends IterativeRobot {
 		while(rightstick.getRawButton(6)){
 			RopeClimber.set(-.8);
 			UpdateDash();
+		}
+		if (rightstick.getRawButton(12)){
+			holdRope = true;
 		}
 	  RopeClimber.set(0);
 	  UpdateDash();
