@@ -109,7 +109,7 @@ public class Robot extends IterativeRobot {
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
-				Tankdrive.tankDrive(0.5, 0.5);
+				Tankdrive.tankDrive(0.52, 0.5);
 				Timer.delay(2.5);
 				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
@@ -177,13 +177,17 @@ public class Robot extends IterativeRobot {
 		while(rightstick.getRawButton(5)){
 			RopeClimber.set(1);
 			UpdateDash();
+			TankDrive();
 	  }
 		while(rightstick.getRawButton(6)){
 			RopeClimber.set(-1);
 			UpdateDash();
+			TankDrive();
 		}
 	  RopeClimber.set(0);
 	  UpdateDash();
+	  TankDrive();
+	  
 	}
 	
 
