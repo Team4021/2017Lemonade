@@ -40,9 +40,7 @@ public class Robot extends IterativeRobot {
 	Encoder encoder;
 	boolean autoFirst;
 	double finalLeft;
-	double finalRight;
-	boolean holdRope;
-	
+	double finalRight;	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -63,7 +61,6 @@ public class Robot extends IterativeRobot {
 		leftstick = new Joystick(1);	
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
-		holdRope = false;
 		
 	}
 	/**
@@ -97,11 +94,11 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(2.6);
+				Timer.delay(3.4);
 				Tankdrive.tankDrive(.5, -.5);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(0.5);
+				Timer.delay(0.9);
 				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
@@ -113,7 +110,7 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
 				Tankdrive.tankDrive(0.5, 0.5);
-				Timer.delay(1.7);
+				Timer.delay(2.5);
 				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
@@ -124,11 +121,11 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(2.6);
+				Timer.delay(3.9);
 				Tankdrive.tankDrive(-.5, .5);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(0.5);
+				Timer.delay(0.8);
 				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
@@ -145,11 +142,7 @@ public class Robot extends IterativeRobot {
 		TankDrive();
 		UpdateDash();
 		RopeClimb();
-		System.out.println(holdRope);
-		if(holdRope == true){
-			RopeClimber.set(0.3);
 		}
-	}
 	
 	public void TankDrive() {
 		finalLeft = leftstick.getY() * -1;
@@ -182,15 +175,12 @@ public class Robot extends IterativeRobot {
 	
 	public void RopeClimb() {
 		while(rightstick.getRawButton(5)){
-			RopeClimber.set(.8);
+			RopeClimber.set(1);
 			UpdateDash();
 	  }
 		while(rightstick.getRawButton(6)){
-			RopeClimber.set(-.8);
+			RopeClimber.set(-1);
 			UpdateDash();
-		}
-		if (rightstick.getRawButton(12)){
-			holdRope = true;
 		}
 	  RopeClimber.set(0);
 	  UpdateDash();
