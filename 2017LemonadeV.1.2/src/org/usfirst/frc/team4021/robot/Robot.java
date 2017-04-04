@@ -1,4 +1,4 @@
-//2017 Lemonade Master
+//2017 Clem Master
 package org.usfirst.frc.team4021.robot;
 
 
@@ -31,7 +31,7 @@ public class Robot extends IterativeRobot {
 	RobotDrive Tankdrive;
 	VictorSP frontLeft, frontRight, rearLeft, rearRight;
 	Joystick leftstick, rightstick;
-	CANTalon RopeClimber = new CANTalon (0);
+	CANTalon RopeClimber = new CANTalon (3,4);
 	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
@@ -52,10 +52,10 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Middle Auto", middleAuto);
 		chooser.addObject("Right Auto", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-    	frontLeft = new VictorSP(0);
-    	rearRight = new VictorSP(1);
-    	frontRight = new VictorSP(2);
-    	rearLeft = new VictorSP(3);
+    	frontLeft = new VictorSP(2);
+    	rearRight = new VictorSP(0);
+    	frontRight = new VictorSP(5);
+    	rearLeft = new VictorSP(1);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		rightstick = new Joystick(2);
 		leftstick = new Joystick(1);	
@@ -94,7 +94,7 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(3.4);
+				Timer.delay(3.2);
 				Tankdrive.tankDrive(.5, -.5);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
@@ -121,7 +121,7 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(3.9);
+				Timer.delay(3.6);
 				Tankdrive.tankDrive(-.5, .5);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
@@ -174,12 +174,12 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void RopeClimb() {
-		while(rightstick.getRawButton(5)){
+		while(rightstick.getRawButton(3)){
 			RopeClimber.set(1);
 			UpdateDash();
 			TankDrive();
 	  }
-		while(rightstick.getRawButton(6)){
+		while(rightstick.getRawButton(4)){
 			RopeClimber.set(-1);
 			UpdateDash();
 			TankDrive();
