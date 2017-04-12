@@ -29,15 +29,12 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	RobotDrive Tankdrive;
-	VictorSP frontLeft, frontRight, rearLeft, rearRight;
+	VictorSP frontLeft, frontRight, rearLeft, rearRight, ropeClimb1, ropeClimb2;
 	Joystick leftstick, rightstick;
-	CANTalon RopeClimber = new CANTalon (3,4);
-	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
 	UsbCamera Cam0;
 	UsbCamera Cam1;
-	Encoder encoder;
 	boolean autoFirst;
 	double finalLeft;
 	double finalRight;	
@@ -52,10 +49,12 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Middle Auto", middleAuto);
 		chooser.addObject("Right Auto", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-    	frontLeft = new VictorSP(2);
-    	rearRight = new VictorSP(0);
+    	rearRight = new VictorSP(0);    
+    	rearLeft = new VictorSP(1);    
+    	frontLeft = new VictorSP(2);    
+    	ropeClimb1 = new VictorSP();
+    	ropeClimb2 = new VictorSP();
     	frontRight = new VictorSP(5);
-    	rearLeft = new VictorSP(1);
 		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		rightstick = new Joystick(2);
 		leftstick = new Joystick(1);	
@@ -164,7 +163,6 @@ public class Robot extends IterativeRobot {
 	
 	public void UpdateDash() {
 		double pdpCurrent = pdp.getCurrent(1);
-		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
 		SmartDashboard.putNumber("Left Stick", finalLeft);
 		SmartDashboard.putNumber("Right Stick", finalRight);
@@ -175,16 +173,19 @@ public class Robot extends IterativeRobot {
 	
 	public void RopeClimb() {
 		while(rightstick.getRawButton(3)){
-			RopeClimber.set(1);
+			ropeClimb1.set(1);
+			ropeClimb2.set(1);
 			UpdateDash();
 			TankDrive();
 	  }
 		while(rightstick.getRawButton(4)){
-			RopeClimber.set(-1);
+			ropeClimb1.set(-1);
+			ropeClimb2.set(-1);
 			UpdateDash();
 			TankDrive();
 		}
-	  RopeClimber.set(0);
+	  ropeClimb1.set(0);
+	  ropeClimb2.set(0);
 	  UpdateDash();
 	  TankDrive();
 	  
