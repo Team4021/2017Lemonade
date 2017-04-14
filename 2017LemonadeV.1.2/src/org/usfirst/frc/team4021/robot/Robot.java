@@ -49,15 +49,15 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Middle Auto", middleAuto);
 		chooser.addObject("Right Auto", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-    	rearRight = new VictorSP(0);    
-    	rearLeft = new VictorSP(1);    
-    	frontLeft = new VictorSP(2);    
-    	ropeClimb1 = new VictorSP();
-    	ropeClimb2 = new VictorSP();
-    	frontRight = new VictorSP(5);
-		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
+    	frontLeft = new VictorSP(0);   
+    	rearRight = new VictorSP(1);
+    	frontRight = new VictorSP(2);  
+    	rearLeft = new VictorSP(3);    
+    	ropeClimb1 = new VictorSP(4);
+    	ropeClimb2 = new VictorSP(5);
+		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);	
+		leftstick = new Joystick(1);
 		rightstick = new Joystick(2);
-		leftstick = new Joystick(1);	
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	
 		
@@ -93,8 +93,8 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(3.2);
-				Tankdrive.tankDrive(.5, -.5);
+				Timer.delay(3.7);
+				Tankdrive.tankDrive(.6, -.6);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
 				Timer.delay(0.9);
@@ -120,8 +120,8 @@ public class Robot extends IterativeRobot {
 				Tankdrive.setSafetyEnabled(false);
 				Timer.delay(0.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(3.6);
-				Tankdrive.tankDrive(-.5, .5);
+				Timer.delay(3.7);
+				Tankdrive.tankDrive(-.6, .6);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
 				Timer.delay(0.8);
@@ -178,7 +178,7 @@ public class Robot extends IterativeRobot {
 			UpdateDash();
 			TankDrive();
 	  }
-		while(rightstick.getRawButton(4)){
+		while(leftstick.getRawButton(3)){
 			ropeClimb1.set(-1);
 			ropeClimb2.set(-1);
 			UpdateDash();
