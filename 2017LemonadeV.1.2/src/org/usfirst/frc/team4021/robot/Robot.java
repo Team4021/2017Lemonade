@@ -91,13 +91,12 @@ public class Robot extends IterativeRobot {
 		case leftAuto:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(0.5);
-				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(3.7);
+				Tankdrive.tankDrive(.5, .55);
+				Timer.delay(4.3);
 				Tankdrive.tankDrive(.6, -.6);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(0.9);
+				Timer.delay(0.7);
 				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
@@ -107,9 +106,8 @@ public class Robot extends IterativeRobot {
 		default:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(0.5);
-				Tankdrive.tankDrive(0.52, 0.5);
-				Timer.delay(2.5);
+				Tankdrive.tankDrive(.5, .53);
+				Timer.delay(3.3);
 				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
@@ -118,13 +116,12 @@ public class Robot extends IterativeRobot {
 		case rightAuto:
 			if(autoFirst == true){
 				Tankdrive.setSafetyEnabled(false);
-				Timer.delay(0.5);
-				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(3.7);
+				Tankdrive.tankDrive(.5, .55);
+				Timer.delay(4.3);
 				Tankdrive.tankDrive(-.6, .6);
 				Timer.delay(.5);
 				Tankdrive.tankDrive(.5, .5);
-				Timer.delay(0.8);
+				Timer.delay(0.7);
 				Tankdrive.tankDrive(0, 0);
 				autoFirst = false;
 				Tankdrive.setSafetyEnabled(true);
