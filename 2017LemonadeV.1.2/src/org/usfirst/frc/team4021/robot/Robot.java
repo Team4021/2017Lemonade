@@ -28,9 +28,9 @@ public class Robot extends IterativeRobot {
 	final String rightAuto = "Right Side";
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
-	RobotDrive Tankdrive;
+	RobotDrive tankDrive;
 	VictorSP frontLeft, frontRight, rearLeft, rearRight;
-	Joystick leftstick, rightstick;
+	Joystick xBox;
 	double TankDashLeft;
 	double TankDashRight;
 	double SRX;
@@ -50,14 +50,12 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Middle", middleAuto);
 		chooser.addObject("Right Side", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-		
     	frontLeft = new VictorSP(9);
     	frontRight = new VictorSP(1);
     	rearLeft = new VictorSP(2);
     	rearRight = new VictorSP(3);
-		Tankdrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
-		leftstick = new Joystick(1);
-		rightstick = new Joystick(2);
+		tankDrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
+		xBox = new Joystick(1);
 		
 		Cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		Cam1 = CameraServer.getInstance().startAutomaticCapture(1);	}
@@ -108,14 +106,12 @@ public class Robot extends IterativeRobot {
 		TankDrive();
 		UpdateDash();
 		RopeClimb();
-		TankDashLeft = leftstick.getY();
-		TankDashRight = rightstick.getY();
 	
 	}
 	
 	
 	public void TankDrive() {
-		Tankdrive.tankDrive(leftstick, rightstick);
+		tankDrive.arcadeDrive(xBox);
 		
 	}
 	
@@ -129,7 +125,7 @@ public class Robot extends IterativeRobot {
 	}
 	
 	public void RopeClimb() {
-	  while(leftstick.getRawButton(1)){
+	  while(xBox.getRawButton(1)){
 			RopeClimber.set(.5);
 	  }
 	  RopeClimber.set(0);
