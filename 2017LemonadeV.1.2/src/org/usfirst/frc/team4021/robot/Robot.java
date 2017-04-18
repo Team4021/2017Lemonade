@@ -29,14 +29,12 @@ public class Robot extends IterativeRobot {
 	String autoSelected;
 	SendableChooser<String> chooser = new SendableChooser<>();
 	RobotDrive tankDrive;
-	VictorSP frontLeft, frontRight, rearLeft, rearRight;
+	VictorSP frontLeft, frontRight, rearLeft, rearRight, ropeClimb1, ropeClimb2;
 	Joystick xBox;
 	double TankDashLeft;
 	double TankDashRight;
-	double SRX;
 	double pdpCurrent;
 	PowerDistributionPanel pdp = new PowerDistributionPanel();
-	CANTalon RopeClimber = new CANTalon (0);
 	UsbCamera Cam0;
 	UsbCamera Cam1;
 
@@ -50,10 +48,12 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Middle", middleAuto);
 		chooser.addObject("Right Side", rightAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-    	frontLeft = new VictorSP(9);
-    	frontRight = new VictorSP(1);
-    	rearLeft = new VictorSP(2);
-    	rearRight = new VictorSP(3);
+    	frontLeft = new VictorSP(0);   
+    	rearRight = new VictorSP(1);
+    	frontRight = new VictorSP(2);  
+    	rearLeft = new VictorSP(3);    
+    	ropeClimb1 = new VictorSP(4);
+    	ropeClimb2 = new VictorSP(5);
 		tankDrive = new RobotDrive(frontLeft, frontRight, rearLeft, rearRight);
 		xBox = new Joystick(1);
 		
@@ -119,16 +119,17 @@ public class Robot extends IterativeRobot {
 		double pdpCurrent = pdp.getCurrent(1);
 		SmartDashboard.putNumber("Left Stick", TankDashLeft);
 		SmartDashboard.putNumber("Right Stick", TankDashRight);
-		SmartDashboard.putNumber("TalonSRX", SRX);
 		SmartDashboard.putNumber("Current", pdpCurrent);
 	
 	}
 	
 	public void RopeClimb() {
 	  while(xBox.getRawButton(1)){
-			RopeClimber.set(.5);
+		  ropeClimb1.set(1);
+		  ropeClimb2.set(1);
 	  }
-	  RopeClimber.set(0);
+	  ropeClimb1.set(0);
+	  ropeClimb2.set(0);
 	}
 	/**
 	 * This function is called periodically during test mode
